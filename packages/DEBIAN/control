@@ -1,0 +1,9 @@
+Source:                 firefly
+Section:                misc
+Priority:               optional
+Maintainer:             l1ghth4t
+Build-Depends:          docker, docker.io, docker-compose
+Package:                firefly
+Architecture:           amd64
+Description:            Self-hosted file hosting
+Version:
