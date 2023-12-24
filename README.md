@@ -3,7 +3,7 @@
 
 Self-hosted file hosting.
 
-[![Build and Deploy](https://github.com/light-hat/firefly/actions/workflows/pipe.yml/badge.svg)](https://github.com/light-hat/firefly/actions/workflows/pipe.yml/)
+[![Check](https://github.com/light-hat/firefly/actions/workflows/commit.yml/badge.svg)](https://github.com/light-hat/firefly/actions/workflows/commit.yml/)
 [![GitHub release](https://img.shields.io/github/v/release/light-hat/firefly.svg)](https://GitHub.com/light-hat/firefly/releases/)
 
 </div>
