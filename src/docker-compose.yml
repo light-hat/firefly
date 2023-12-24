@@ -12,9 +12,9 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=webdb
-      - POSTGRES_PASSWORD=webdbpasswd
-      - POSTGRES_DB=dmtdb
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=db_password
+      - POSTGRES_DB=db_name
     #env_file:
     #  - ./.env.db
     restart: always
