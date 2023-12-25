@@ -5,7 +5,7 @@ services:
     image: postgres:12-alpine
     container_name: postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
     networks:
       firenet:
         ipv4_address: 172.16.0.2
@@ -15,7 +15,7 @@ services:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=db_password
       - POSTGRES_DB=db_name
-    #env_file:
+    #env_file: # Better: use env file.
     #  - ./.env.db
     restart: always
     healthcheck:
@@ -30,6 +30,16 @@ services:
       context: ./firefly
       dockerfile: Dockerfile
     container_name: web
+    environment:
+      - SECRET_KEY=hkfjndfgdflgdfgdrfgt98eoif4e4f34wrf4tr
+      - ALLOWED_HOSTS=localhost 127.0.0.1 db
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=db_user 
+      - POSTGRES_PASSWORD=db_password 
+      - POSTGRES_DB=db_name 
+      - POSTGRES_PORT=5432
+    #env_file: # Better: use env file.
+    #  - ./.env
     #ports:
     #  - 8000:8000
     networks:
@@ -38,13 +48,9 @@ services:
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
-    #env_file:
-    #  - ./.env
     depends_on:
       - db
     restart: always
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     healthcheck:
       test: curl --fail http://localhost:8000 || exit 1
       interval: 20s
@@ -64,8 +70,6 @@ services:
     networks:
       firenet:
         ipv4_address: 172.16.0.4
-    #env_file:
-    #  - ./.env
     depends_on:
       - web
     restart: always

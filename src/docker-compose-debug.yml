@@ -15,8 +15,6 @@ services:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=db_password
       - POSTGRES_DB=db_name
-    #env_file:
-    #  - ./.env.db
     restart: always
     healthcheck:
       test: pg_isready
@@ -46,13 +44,9 @@ services:
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
-    #env_file:
-    #  - ./.env
     depends_on:
       - db
     restart: always
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     healthcheck:
       test: curl --fail http://localhost:8000 || exit 1
       interval: 20s
@@ -72,8 +66,6 @@ services:
     networks:
       firenet:
         ipv4_address: 172.16.0.4
-    #env_file:
-    #  - ./.env
     depends_on:
       - web
     restart: always
