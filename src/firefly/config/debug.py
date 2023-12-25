@@ -1,5 +1,4 @@
-import os
-from os import environ
+# pylint: disable=R0801
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
