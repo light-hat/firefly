@@ -1,5 +1,7 @@
 # Conception
 
+Theory of this app.
+
 ## Table of contents
 * [Database](#database)
 * [Architecture](#architecture)
