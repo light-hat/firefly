@@ -10,6 +10,21 @@ DEBUG = False
 
 ALLOWED_HOSTS = list(environ.get('ALLOWED_HOSTS', '').split(' '))
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': environ.get('POSTGRES_DB'),
+        'USER': environ.get('POSTGRES_USER'),
+        'PASSWORD': environ.get('POSTGRES_PASSWORD'),
+        'HOST': environ.get('POSTGRES_HOST'),
+        'PORT': environ.get('POSTGRES_PORT', '5432'),
+    }
+}
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
