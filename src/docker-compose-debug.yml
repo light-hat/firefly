@@ -1,0 +1,97 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      firenet:
+        ipv4_address: 172.16.0.2
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=db_password
+      - POSTGRES_DB=db_name
+    #env_file:
+    #  - ./.env.db
+    restart: always
+    healthcheck:
+      test: pg_isready
+      interval: 20s
+      timeout: 5s
+      retries: 3
+  
+  web:
+    image: firefly-web:latest
+    build:
+      context: ./firefly
+      dockerfile: Dockerfile.debug
+    container_name: web
+    environment:
+      - SECRET_KEY=hfeo984f0940(FR*#$Jfrj43p043jf094e[gthe045tg[40t8670821olfsdgh 
+      - ALLOWED_HOSTS=localhost 127.0.0.1 db
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=db_user 
+      - POSTGRES_PASSWORD=db_password 
+      - POSTGRES_DB=db_name 
+      - POSTGRES_PORT=5432 
+    #ports:
+    #  - 8000:8000
+    networks:
+      firenet:
+        ipv4_address: 172.16.0.3
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    #env_file:
+    #  - ./.env
+    depends_on:
+      - db
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: curl --fail http://localhost:8000 || exit 1
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+  nginx:
+    image: firefly-web-nginx:latest
+    build: ./nginx/
+    container_name: nginx
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      firenet:
+        ipv4_address: 172.16.0.4
+    #env_file:
+    #  - ./.env
+    depends_on:
+      - web
+    restart: always
+    healthcheck:
+      test: curl --fail http://localhost:80 || exit 1
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+networks:
+  firenet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.0.0/28"
+
+volumes:
+  postgres_volume:
+  static_volume:
+  media_volume:
