@@ -4,11 +4,18 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = environ.get('SECRET_KEY')
+SECRET_KEY = "hofij9w84fje349f94wejgf4w9fooe4wogtf9poeo45" # WARNING: don't use this key on production
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = list(environ.get('ALLOWED_HOSTS', '').split(' '))
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
