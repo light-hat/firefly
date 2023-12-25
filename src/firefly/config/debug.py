@@ -1,3 +1,5 @@
+""" Settings for debug dockerized mode. """
+
 # pylint: disable=R0801
 import os
 from os import environ

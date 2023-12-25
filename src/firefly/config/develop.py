@@ -1,3 +1,5 @@
+""" Settings for development mode (DOCKERLESS). """
+
 import os
 from pathlib import Path
 
