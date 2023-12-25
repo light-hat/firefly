@@ -1,8 +1,10 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "hofij9w84fje349f94wejgf4w9fooe4wogtf9poeo45" # WARNING: don't use this key on production
+# WARNING: don't use this key on production
+SECRET_KEY = "hofij9w84fje349f94wejgf4w9fooe4wogtf9poeo45"
 
 DEBUG = True
 
